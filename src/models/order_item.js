@@ -11,5 +11,24 @@ module.exports = (sequelize, DataTypes) => {
     },
     { underscored: true }
   );
+
+  orderItem.associate = db => {
+    orderItem.belongsTo(db.Order, {
+      foreignKey: {
+        name: "orderId",
+        allowNull: false
+      },
+      onDelete: "RESTRICT"
+    });
+
+    orderItem.belongsTo(db.Product, {
+      foreignKey: {
+        name: "productId",
+        allowNull: false
+      },
+      onDelete: "RESTRICT"
+    });
+  };
+
   return orderItem;
 };
