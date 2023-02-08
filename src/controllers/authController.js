@@ -1,6 +1,7 @@
 const {
   validateRegister,
-  validateLogin
+  validateLogin,
+  validateInformationUser
 } = require("../validators/authValidator");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
@@ -73,4 +74,12 @@ exports.login = async (req, res, next) => {
 
 exports.getMe = (req, res, next) => {
   res.status(200).json({ user: req.user });
+};
+
+exports.informationUser = async (req, res, next) => {
+  try {
+    const value = validateInformationUser(req.body);
+  } catch (err) {
+    next(err);
+  }
 };

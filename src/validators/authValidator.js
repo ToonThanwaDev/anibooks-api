@@ -38,3 +38,18 @@ const loginSchema = Joi.object({
 });
 
 exports.validateLogin = validate(loginSchema);
+
+const informationUserSchema = Joi.object({
+  firstName: Joi.string().trim().required().messages({
+    "string.empty": "First name is required"
+  }),
+  lastName: Joi.string().trim().required().messages({
+    "string.empty": "Last name is required"
+  }),
+  phone: Joi.string().pattern(/^[0-9]{10}$/),
+  address: Joi.string().required().messages({
+    "string.empty": "Address is required"
+  })
+});
+
+exports.validateInformationUser = validate(informationUserSchema);
