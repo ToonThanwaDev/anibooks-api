@@ -47,9 +47,23 @@ exports.login = async (req, res, next) => {
       createError("Invalid Email or Password", 400);
     }
 
-    const accessToken = jwt.sign({ id: user.id }, process.env.JWT_SECRET_KEY, {
-      expiresIn: process.env.JWT_EXPIRES_IN
-    });
+    const accessToken = jwt.sign(
+      {
+        id: user.id,
+        username: user.username,
+        email: user.email,
+        firstName: user.firstName,
+        lastName: user.lastName,
+        address: user.address,
+        phone: user.phone,
+        createdAt: user.createdAt,
+        updatedAt: user.updatedAt
+      },
+      process.env.JWT_SECRET_KEY,
+      {
+        expiresIn: process.env.JWT_EXPIRES_IN
+      }
+    );
 
     res.status(200).json({ accessToken });
   } catch (err) {

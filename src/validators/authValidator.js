@@ -2,7 +2,7 @@ const Joi = require("joi");
 const validate = require("./validate");
 
 const registerSchema = Joi.object({
-  username: Joi.string().trim().required().messages({
+  username: Joi.string().required().messages({
     "any.required": "Username is required",
     "string.empty": "Username is required",
     "string.base": "Username must be a string"
