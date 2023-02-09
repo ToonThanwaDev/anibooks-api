@@ -5,8 +5,10 @@ const {
 } = require("../validators/authValidator");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
+const cloudinary = require("../utils/cloudinary");
 
-const { User } = require("../models");
+const { STATUS_PENDING } = require("../config/constants");
+const { User, Payment, Order } = require("../models");
 const createError = require("../utils/createError");
 
 exports.register = async (req, res, next) => {
@@ -78,11 +80,25 @@ exports.getMe = (req, res, next) => {
 
 exports.informationUser = async (req, res, next) => {
   try {
-    const value = req.body;
+    const { firstName, lastName, phone, address } = req.body;
+    const value = { firstName, lastName, phone, address };
+
+    const paymentUrl = await cloudinary.upload(req.file?.path);
 
     await User.update(value, { where: { id: req.user.id } });
+    const resOrder = await Order.create({
+      userId: req.user.id,
+      status: STATUS_PENDING
+    });
 
-    res.status(201).json({ value });
+    const payment = {
+      userId: req.user.id,
+      slipImage: paymentUrl,
+      orderId: resOrder.id
+    };
+    await Payment.create(payment);
+
+    res.status(201).json({ payment });
   } catch (err) {
     next(err);
   }
