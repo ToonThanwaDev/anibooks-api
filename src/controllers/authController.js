@@ -78,7 +78,11 @@ exports.getMe = (req, res, next) => {
 
 exports.informationUser = async (req, res, next) => {
   try {
-    const value = validateInformationUser(req.body);
+    const value = req.body;
+
+    await User.update(value, { where: { id: req.user.id } });
+
+    res.status(201).json({ value });
   } catch (err) {
     next(err);
   }
