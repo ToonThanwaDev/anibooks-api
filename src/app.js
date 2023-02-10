@@ -5,8 +5,9 @@ const chalk = require("chalk");
 const morgan = require("morgan");
 const helmet = require("helmet");
 const rateLimit = require("express-rate-limit");
-const shopRoute = require("./routes/shopRoute");
 
+const cartRoute = require("./routes/cartRoute");
+const shopRoute = require("./routes/shopRoute");
 const authRoute = require("./routes/authRoute");
 const notFoundMiddleware = require("./middlewares/notFound");
 const errorMiddleware = require("./middlewares/error");
@@ -27,6 +28,7 @@ app.use(express.json());
 
 app.use("/auth", authRoute);
 app.use("/shop", shopRoute);
+app.use("/cart", cartRoute);
 
 app.use(notFoundMiddleware);
 app.use(errorMiddleware);
