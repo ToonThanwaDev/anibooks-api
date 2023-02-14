@@ -49,6 +49,10 @@ module.exports = (sequelize, DataTypes) => {
         validate: {
           is: /^[0-9]{10}$/
         }
+      },
+      role: {
+        type: DataTypes.ENUM("user", "admin"),
+        defaultValue: "user"
       }
     },
     { underscored: true }

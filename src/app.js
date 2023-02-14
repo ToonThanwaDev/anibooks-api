@@ -1,3 +1,6 @@
+// const { sequelize } = require("./models");
+// sequelize.sync({ alter: true });
+
 require("dotenv").config();
 const express = require("express");
 const cors = require("cors");
@@ -6,6 +9,7 @@ const morgan = require("morgan");
 const helmet = require("helmet");
 const rateLimit = require("express-rate-limit");
 
+const orderRoute = require("./routes/orderRoute");
 const cartRoute = require("./routes/cartRoute");
 const shopRoute = require("./routes/shopRoute");
 const authRoute = require("./routes/authRoute");
@@ -29,6 +33,7 @@ app.use(express.json());
 app.use("/auth", authRoute);
 app.use("/shop", shopRoute);
 app.use("/", cartRoute);
+app.use("/", orderRoute);
 
 app.use(notFoundMiddleware);
 app.use(errorMiddleware);

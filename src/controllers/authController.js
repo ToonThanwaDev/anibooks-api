@@ -8,7 +8,7 @@ const jwt = require("jsonwebtoken");
 const cloudinary = require("../utils/cloudinary");
 
 const { STATUS_PENDING } = require("../config/constants");
-const { User, Payment, Order } = require("../models");
+const { User, Payment, Order, orderItem, Product, Cart } = require("../models");
 const createError = require("../utils/createError");
 
 exports.register = async (req, res, next) => {
@@ -92,12 +92,29 @@ exports.informationUser = async (req, res, next) => {
       status: STATUS_PENDING
     });
 
+    const getCart = await Cart.findAll({
+      where: { userId: req.user.id },
+      include: { model: Product }
+    });
+
+    const data = getCart.map(el => ({
+      quantity: el.quantity,
+      productId: el.productId,
+      orderId: resOrder.id
+    }));
+
+    await orderItem.bulkCreate(data);
+
     const payment = {
       userId: req.user.id,
       slipImage: paymentUrl,
       orderId: resOrder.id
     };
     await Payment.create(payment);
+
+    await Cart.destroy({
+      where: { userId: req.user.id }
+    });
 
     res.status(201).json({ payment });
   } catch (err) {
