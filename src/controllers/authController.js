@@ -86,6 +86,7 @@ exports.informationUser = async (req, res, next) => {
     const paymentUrl = await cloudinary.upload(req.file?.path);
 
     await User.update(value, { where: { id: req.user.id } });
+
     const resOrder = await Order.create({
       userId: req.user.id,
       status: STATUS_PENDING

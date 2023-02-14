@@ -17,8 +17,8 @@ const app = express();
 app.use(morgan("dev"));
 app.use(
   rateLimit({
-    windowMs: 1000 * 60 * 15,
-    max: 100,
+    windowMs: 1000 * 60 * 5,
+    max: 1000,
     message: { messsage: "too many request, please try again later" }
   })
 );
@@ -28,7 +28,7 @@ app.use(express.json());
 
 app.use("/auth", authRoute);
 app.use("/shop", shopRoute);
-app.use("/cart", cartRoute);
+app.use("/", cartRoute);
 
 app.use(notFoundMiddleware);
 app.use(errorMiddleware);
