@@ -1,3 +1,4 @@
+const fs = require("fs");
 const {
   validateRegister,
   validateLogin,
@@ -119,5 +120,9 @@ exports.informationUser = async (req, res, next) => {
     res.status(201).json({ payment });
   } catch (err) {
     next(err);
+  } finally {
+    if (req.file) {
+      fs.unlinkSync(req.file.path);
+    }
   }
 };
