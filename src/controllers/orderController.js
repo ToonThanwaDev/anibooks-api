@@ -1,4 +1,4 @@
-const { Order, orderItem, Payment } = require("../models");
+const { Order, orderItem, Payment, User } = require("../models");
 
 exports.getOrder = async (req, res, next) => {
   try {
@@ -23,6 +23,12 @@ exports.getOrderUser = async (req, res, next) => {
       include: [
         {
           model: orderItem
+        },
+        {
+          model: User
+        },
+        {
+          model: Payment
         }
       ]
     });
@@ -39,7 +45,7 @@ exports.updateOrder = async (req, res, next) => {
       { status: req.body.status },
       { where: { id: req.body.id } }
     );
-    res.status(201).json({ updateOrder });
+    res.status(200).json({ updateOrder });
   } catch (err) {
     next(err);
   }
