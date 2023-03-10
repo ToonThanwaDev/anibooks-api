@@ -84,7 +84,7 @@ exports.informationUser = async (req, res, next) => {
     const { firstName, lastName, phone, address } = req.body;
     const value = { firstName, lastName, phone, address };
 
-    const paymentUrl = await cloudinary.upload(req.file?.path);
+    const paymentUrl = await cloudinary.upload(req.file?.path, null, "Admin");
 
     await User.update(value, { where: { id: req.user.id } });
 
@@ -98,7 +98,7 @@ exports.informationUser = async (req, res, next) => {
       include: { model: Product }
     });
 
-    const data = getCart.map(el => ({
+    const data = getCart.map((el) => ({
       quantity: el.quantity,
       productId: el.productId,
       orderId: resOrder.id

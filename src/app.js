@@ -13,6 +13,8 @@ const orderRoute = require("./routes/orderRoute");
 const cartRoute = require("./routes/cartRoute");
 const shopRoute = require("./routes/shopRoute");
 const authRoute = require("./routes/authRoute");
+const adminRoute = require("./routes/adminRoute");
+
 const notFoundMiddleware = require("./middlewares/notFound");
 const errorMiddleware = require("./middlewares/error");
 
@@ -34,11 +36,10 @@ app.use("/auth", authRoute);
 app.use("/shop", shopRoute);
 app.use("/", cartRoute);
 app.use("/", orderRoute);
+app.use("/admin", adminRoute);
 
 app.use(notFoundMiddleware);
 app.use(errorMiddleware);
 
 const port = process.env.PORT || 8000;
-app.listen(port, () =>
-  console.log(chalk.cyanBright.bold(`Server is running on port: ${port}`))
-);
+app.listen(port, () => console.log(chalk.cyanBright.bold(`Server is running on port: ${port}`)));

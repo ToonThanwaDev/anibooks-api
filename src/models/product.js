@@ -26,7 +26,7 @@ module.exports = (sequelize, DataTypes) => {
           notEmpty: true
         }
       },
-      datail: {
+      detail: {
         type: DataTypes.TEXT,
         validate: {
           notEmpty: true
@@ -36,7 +36,7 @@ module.exports = (sequelize, DataTypes) => {
     { underscored: true, timestamps: false }
   );
 
-  Product.associate = db => {
+  Product.associate = (db) => {
     Product.hasMany(db.Cart, {
       foreignKey: {
         name: "productId",
