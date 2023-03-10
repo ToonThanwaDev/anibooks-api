@@ -49,7 +49,7 @@ exports.editProduct = async (req, res, next) => {
       {
         title: req.body.title
       },
-      { where: { Id: +req.params.categoryId } }
+      { where: { id: +req.params.categoryId } }
     );
 
     res.status(200).json({ message: `event was successfully updated` });

@@ -1,4 +1,4 @@
-const { Order, orderItem, Payment, User } = require("../models");
+const { Order, orderItem, Payment, User, Product } = require("../models");
 
 exports.getOrder = async (req, res, next) => {
   try {
@@ -6,7 +6,8 @@ exports.getOrder = async (req, res, next) => {
       where: { userId: req.user.id },
       include: [
         {
-          model: orderItem
+          model: orderItem,
+          include: { model: Product, attributes: ["name", "image"] }
         }
       ]
     });

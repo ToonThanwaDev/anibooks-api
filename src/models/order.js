@@ -1,11 +1,11 @@
-const { STATUS_COMPLETED, STATUS_PENDING } = require("../config/constants");
+const { STATUS_COMPLETED, STATUS_PENDING, STATUS_REJECTED } = require("../config/constants");
 
 module.exports = (sequelize, DataTypes) => {
   const Order = sequelize.define(
     "Order",
     {
       status: {
-        type: DataTypes.ENUM(STATUS_COMPLETED, STATUS_PENDING),
+        type: DataTypes.ENUM(STATUS_COMPLETED, STATUS_PENDING, STATUS_REJECTED),
         allowNull: false,
         defaultValue: STATUS_PENDING
       }
@@ -13,7 +13,7 @@ module.exports = (sequelize, DataTypes) => {
     { underscored: true }
   );
 
-  Order.associate = db => {
+  Order.associate = (db) => {
     Order.belongsTo(db.User, {
       foreignKey: {
         name: "userId",
