@@ -50,7 +50,8 @@ module.exports = (sequelize, DataTypes) => {
         name: "productId",
         allowNull: false
       },
-      onDelete: "RESTRICT"
+      onUpdate: "CASCADE",
+      onDelete: "CASCADE"
     });
 
     Product.belongsTo(db.Category, {

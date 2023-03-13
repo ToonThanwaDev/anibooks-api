@@ -12,7 +12,7 @@ module.exports = (sequelize, DataTypes) => {
     { underscored: true }
   );
 
-  orderItem.associate = db => {
+  orderItem.associate = (db) => {
     orderItem.belongsTo(db.Order, {
       foreignKey: {
         name: "orderId",
@@ -26,7 +26,8 @@ module.exports = (sequelize, DataTypes) => {
         name: "productId",
         allowNull: false
       },
-      onDelete: "RESTRICT"
+      onUpdate: "CASCADE",
+      onDelete: "CASCADE"
     });
   };
 
